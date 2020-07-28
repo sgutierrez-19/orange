@@ -134,5 +134,12 @@ public class Residents {
     this.householdId = householdId;
   }
 
+  @Override
+  public String toString() {
+    return "Residents [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
+        + ", phoneNumber=" + phoneNumber + ", currAddress=" + currAddress + ", currCity=" + currCity
+        + ", currState=" + currState + ", currZip=" + currZip + ", householdId=" + householdId
+        + "]";
+  }
   
 }

@@ -73,5 +73,10 @@ public class Notes {
     this.note = note;
   }
 
+  @Override
+  public String toString() {
+    return "Notes [id=" + id + ", householdId=" + householdId + ", dateCreated=" + dateCreated
+        + ", note=" + note + "]";
+  }
   
 }
