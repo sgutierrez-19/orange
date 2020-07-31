@@ -1,6 +1,6 @@
 package com.revature.orangeserver.models;
 
-import java.util.Date;
+import java.sql.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,17 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(schema = "something", name = "notes")
 public class Notes {
 
   @Id
-  @Column(name = "id")
+  @Column(name = "note_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Integer noteId;
   
   @ManyToOne
+  @JsonIgnoreProperties({"notes, household"})
   @JoinColumn(name = "household_id")
   private Households householdId;
   
@@ -33,20 +35,20 @@ public class Notes {
     super();
   }
 
-  public Notes(Integer id, Households householdId, Date dateCreated, String note) {
+  public Notes(Integer noteId, Households householdId, Date dateCreated, String note) {
     super();
-    this.id = id;
+    this.noteId = noteId;
     this.householdId = householdId;
     this.dateCreated = dateCreated;
     this.note = note;
   }
 
-  public Integer getId() {
-    return id;
+  public Integer getNoteId() {
+    return noteId;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setNoteId(Integer noteId) {
+    this.noteId = noteId;
   }
 
   public Households getHouseholdId() {
@@ -75,8 +77,9 @@ public class Notes {
 
   @Override
   public String toString() {
-    return "Notes [id=" + id + ", householdId=" + householdId + ", dateCreated=" + dateCreated
-        + ", note=" + note + "]";
+    return "Notes [noteId=" + noteId + ", householdId=" + householdId + ", dateCreated="
+        + dateCreated + ", note=" + note + "]";
   }
+
   
 }

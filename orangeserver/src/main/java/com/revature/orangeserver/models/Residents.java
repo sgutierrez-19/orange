@@ -8,19 +8,17 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(schema = "something", name="residents")
 public class Residents {
 
-  public Residents() {
-    super();
-  }
-
   @Id
-  @Column(name = "id")
+  @Column(name = "resident_id")
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  private Integer residentId;
   
   @Column(name = "first_name")
   private String firstName;
@@ -44,14 +42,19 @@ public class Residents {
   private String currZip;
   
   @ManyToOne
+  @JsonIgnore
   @JoinColumn(name = "household_id")
   private Households householdId;
 
-  public Residents(Integer id, String firstName, String lastName, String phoneNumber,
+  public Residents() {
+    super();
+  }
+
+  public Residents(Integer residentId, String firstName, String lastName, String phoneNumber,
       String currAddress, String currCity, String currState, String currZip,
       Households householdId) {
     super();
-    this.id = id;
+    this.residentId = residentId;
     this.firstName = firstName;
     this.lastName = lastName;
     this.phoneNumber = phoneNumber;
@@ -62,12 +65,12 @@ public class Residents {
     this.householdId = householdId;
   }
 
-  public Integer getId() {
-    return id;
+  public Integer getResidentId() {
+    return residentId;
   }
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setResidentId(Integer residentId) {
+    this.residentId = residentId;
   }
 
   public String getFirstName() {
@@ -136,10 +139,11 @@ public class Residents {
 
   @Override
   public String toString() {
-    return "Residents [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName
-        + ", phoneNumber=" + phoneNumber + ", currAddress=" + currAddress + ", currCity=" + currCity
-        + ", currState=" + currState + ", currZip=" + currZip + ", householdId=" + householdId
-        + "]";
+    return "Residents [residentId=" + residentId + ", firstName=" + firstName + ", lastName="
+        + lastName + ", phoneNumber=" + phoneNumber + ", currAddress=" + currAddress + ", currCity="
+        + currCity + ", currState=" + currState + ", currZip=" + currZip + ", householdId="
+        + householdId + "]";
   }
+
   
 }
