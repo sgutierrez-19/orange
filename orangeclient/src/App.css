@@ -6,7 +6,7 @@ body {
 .main-container {
   height: calc(100vh - 56px);
   max-width: 100%;
-  border: 2px solid red;
+  /* border: 2px solid red; */
 }
 
 .title-row {
@@ -18,7 +18,7 @@ body {
   height: calc(100% - 73px);
 }
 
-.sub-title {
+.center-div {
   /* margin: 1rem 0rem 1rem 0rem; */
   display: flex;
   align-items: center;
@@ -28,12 +28,30 @@ body {
 .at-a-glance {
   border: 1px solid black;
   height: 100%;
+  padding: 1rem;
 }
 
 .glance-div {
-  width: 300px;
+  width: 100%;
   border: 1px solid black;
 }
 
 .shortcut-menu {
+  border: 1px solid black;
+}
+
+.shortcut-menu-title {
+  height: 40px;
+}
+
+.subbb {
+  align-items: center;
+}
+
+.available-apts-div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }

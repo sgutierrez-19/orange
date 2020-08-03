@@ -1,0 +1,14 @@
+.apt-card {
+  flex: 1;
+  height: 200px;
+  width: 175px;
+  min-width: 175px;
+  max-width: 175px !important;
+  border: 1px solid black;
+  margin: 1rem;
+}
+
+.apt-card-img {
+  height: 125px;
+  width: auto;
+}

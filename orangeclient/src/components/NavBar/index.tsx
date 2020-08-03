@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   Navbar,
   NavbarBrand,
@@ -10,9 +10,9 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
   NavLink,
 } from 'reactstrap';
+import { Link } from 'react-router-dom';
 
 export class NavBar extends React.Component<any, any> {
   constructor(props: any) {
@@ -37,14 +37,21 @@ export class NavBar extends React.Component<any, any> {
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className='mr-auto' navbar>
               <NavItem>
-                <NavLink href='/components/'>Components</NavLink>
+                <Link className='nav-link' to='/apartments'>
+                  Apartments
+                </Link>
               </NavItem>
               <NavItem>
-                <NavLink href='https://github.com/reactstrap/reactstrap'>
-                  GitHub
-                </NavLink>
+                <Link className='nav-link' to='/residents'>
+                  Residents
+                </Link>
               </NavItem>
-              <UncontrolledDropdown nav inNavbar>
+              <NavItem>
+                <Link className='nav-link' to='/prospects'>
+                  Prospects
+                </Link>
+              </NavItem>
+              {/* <UncontrolledDropdown nav inNavbar>
                 <DropdownToggle nav caret>
                   Options
                 </DropdownToggle>
@@ -54,7 +61,7 @@ export class NavBar extends React.Component<any, any> {
                   <DropdownItem divider />
                   <DropdownItem>Reset</DropdownItem>
                 </DropdownMenu>
-              </UncontrolledDropdown>
+              </UncontrolledDropdown> */}
             </Nav>
           </Collapse>
         </Navbar>
