@@ -28,7 +28,10 @@ public class OrangeserverApplication {
 	      @Override
 	      public void addCorsMappings(CorsRegistry registry) {
 	        registry.addMapping("/**")
-	            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS").allowedHeaders("*");
+	            .allowedMethods("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS")
+	            .allowedHeaders("*")
+	            .allowCredentials(true)
+	            .allowedOrigins("http://localhost:3000");
 
 	      }
 	    };
