@@ -1,5 +1,6 @@
 package com.revature.orangeserver.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,11 @@ public class HouseholdService {
     } else {
       throw new Exception("Household not found");
     }
+  }
+  
+  public List<Households> getAllHouseholds() throws Exception {
+    List<Households> hhList = hhRepo.findAll();
+    return hhList;
   }
   
   public Households updateHousehold(Households h) throws Exception {

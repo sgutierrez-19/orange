@@ -22,7 +22,8 @@ CREATE TABLE something.apartments(
 	has_wash_dry BOOLEAN DEFAULT 0,
 	has_view BOOLEAN DEFAULT 0,
 	reserved_by INT NULL REFERENCES something.households(household_id),
-	occupied_by INT NULL REFERENCES something.households(household_id)
+	occupied_by INT NULL REFERENCES something.households(household_id),
+	is_rentable BOOLEAN DEFAULT 1
 );
 
 CREATE TABLE something.residents(
@@ -47,30 +48,52 @@ CREATE TABLE something.notes(
 
 
 INSERT INTO something.households (expected_move_in, expected_move_out, move_in, move_out, is_prospect, is_future, is_current, on_notice, is_past) 
-VALUES (TO_DATE('03/24/2019', 'MM/DD/YYYY'), null, TO_DATE('03/24/2019', 'MM/DD/YYYY'), null, false, false, true, false, false), 
-	   (TO_DATE('06/13/2019', 'MM/DD/YYYY'), TO_DATE('09/01/2020', 'MM/DD/YYYY'), TO_DATE('06/13/2019', 'MM/DD/YYYY'), null, false, false, true, true, false),
-	   (null, null, null, null, true, false, false, false, false);
+VALUES (TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, false, false, true, false, false), 
+	   (TO_DATE('06/01/2019', 'MM/DD/YYYY'), TO_DATE('9/22/2020', 'MM/DD/YYYY'), TO_DATE('06/01/2019', 'MM/DD/YYYY'), null, false, false, true, true, false),
+	   (TO_DATE('10/01/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
+	   (TO_DATE('09/28/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false);
 
-INSERT INTO something.apartments (apartment_number, has_refrig, has_wash_dry, has_view, reserved_by, occupied_by)
-VALUES ('A101', false, false, false, null, 2),
-       ('A102', false, false, false, null, null),
-       ('A201', false, false, false, 1, 1),
-       ('A202', false, false, false, null, null);
+INSERT INTO something.apartments (apartment_number, has_refrig, has_wash_dry, has_view, reserved_by, occupied_by, is_rentable)
+VALUES ('A101', true, true, false, 3, 2, false),
+       ('A102', false, false, false, null, null, true),
+       ('A201', true, true, true, null, 1, false),
+       ('A202', true, false, true, 4, null, false);
 
 INSERT INTO something.residents (first_name, last_name, household_id)
 VALUES ('Robert', 'Robertson', 1), 
 	   ('Janice', 'Peters', 2), 
 	   ('Suzy', 'Robertson', 1), 
 	   ('Luanne', 'Michaels', 2), 
-	   ('Alice', 'Makers', 3);
+	   ('Alice', 'Makers', 3),
+	   ('Betty', 'Botter', 4),
+	   ('Peter', 'Piper', 4);
 
 	   
 INSERT INTO something.notes (household_id, date_created, note)
-VALUES (1, TO_DATE('03/02/2019', 'MM/DD/YYYY'), 'Came in to look at apartment, ended up renting A201'),
-	   (1, TO_DATE('03/24/2019', 'MM/DD/YYYY'), 'Moved in successfully, wanted extra copy of house key'),
-	   (2, TO_DATE('06/12/2019', 'MM/DD/YYYY'), 'Just moved to area and needed an apartment ASAP, took A101'),
+VALUES (1, TO_DATE('02/25/2019', 'MM/DD/YYYY'), 'Came in to look at apartment, ended up renting A201'),
+	   (1, TO_DATE('03/01/2019', 'MM/DD/YYYY'), 'Moved in successfully, wanted extra copy of house key'),
+	   (2, TO_DATE('05/20/2019', 'MM/DD/YYYY'), 'Just moved to area and needed an apartment ASAP, took A101'),
 	   (2, TO_DATE('07/28/2019', 'MM/DD/YYYY'), 'Complained their upstairs neighbors were too noisy and gave notice to move out'),
-	   (3, TO_DATE('06/01/2020', 'MM/DD/YYYY'), 'Said they just closed on their homes mortgage and were looking for a 6 month lease');
+	   (3, TO_DATE('08/31/2020', 'MM/DD/YYYY'), 'Said they just closed on their homes mortgage and were looking for a 6 month lease');
 
+ALTER TABLE something.households
+ADD COLUMN reserved INT NULL REFERENCES something.apartments(apartment_id);
+ALTER TABLE something.households
+ADD COLUMN occupying INT NULL REFERENCES something.apartments(apartment_id);
 
+UPDATE something.households
+SET	occupying = 3
+WHERE something.households.household_id = 1;
+
+UPDATE something.households
+SET	occupying = 1
+WHERE something.households.household_id = 2;
+
+UPDATE something.households
+SET reserved = 1
+WHERE something.households.household_id = 3;
+
+UPDATE something.households
+SET reserved = 4
+WHERE something.households.household_id = 4;
 

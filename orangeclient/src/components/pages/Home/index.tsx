@@ -20,7 +20,7 @@ export class HomePage extends React.Component<any, any> {
     let all = await getAllApartments();
     let avail = await getAvailApartments();
     let occCount: number = 0;
-    console.log('availability: ', avail);
+    console.log('all: ', all);
     for (let i = 0; i < all.length; i++) {
       if (all[i].occupiedBy) {
         occCount++;
@@ -56,7 +56,7 @@ export class HomePage extends React.Component<any, any> {
           <Col className='shortcut-menu' md={4} xs={12}>
             <Row>
               <Col className='center-div shortcut-menu-title' xs={12}>
-                <h5>Shortcuts</h5>
+                <h4>Shortcuts</h4>
               </Col>
             </Row>
             <div className='glance-div'>

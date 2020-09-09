@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
@@ -36,6 +37,24 @@ public class ApartmentController {
     }
   }
   
+  @GetMapping("/apartment/{id}")
+  public Apartments getApartment(@PathVariable Integer id) {
+    try {
+      return aptService.getById(id);
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+  }
+  
+  @GetMapping("/apartment-num/{aptNum}")
+  public Apartments getApartmentByNum(@PathVariable String aptNum) {
+    try {
+      return aptService.getByAptNumber(aptNum.toUpperCase());
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+  }
+  
   @GetMapping("/get-available")
   public List<Apartments> getAllAvailable() {
     try {
@@ -53,10 +72,11 @@ public class ApartmentController {
     try {
       Apartments apt = aptService.getByAptNumber(reqObj.getAptNumber());
       Households hh =  hhService.getById(reqObj.getHouseholdId());
-      if (apt.getReservedBy() != null) {
+      if (apt.getIsRentable() == false) {
         throw new Exception("Apartment #" + apt.getApartmentNumber() + " is not available to reserved.");
       }
       apt.setReservedBy(hh);
+      apt.setIsRentable(false);
       aptService.updateApartment(apt);
       hh.setIsProspect(false);
       hh.setIsFuture(true);
@@ -87,6 +107,7 @@ public class ApartmentController {
         throw new Exception("You cannot move in a household that hasn't reserved this apartment");
       }
       apt.setOccupiedBy(hh);
+      apt.setReservedBy(null);
       Date expMoveIn = new Date(reqObj.getDate());
       hh.setMoveIn(expMoveIn);
       hh.setIsProspect(false);
@@ -116,7 +137,7 @@ public class ApartmentController {
       if (apt.getOccupiedBy() != hh) {
         throw new Exception("You cannot give notice to an apartment the household doesn't occupy.");
       }
-      apt.setReservedBy(null);
+      apt.setIsRentable(true);
       Date expMoveOut = new Date(reqObj.getDate());
       hh.setExpectedMoveOut(expMoveOut);
       hh.setIsProspect(false);

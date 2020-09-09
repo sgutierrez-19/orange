@@ -1,14 +1,11 @@
 package com.revature.orangeserver.models;
 
-import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -34,20 +31,28 @@ public class Apartments {
   @Column(name = "has_view") 
   private Boolean hasView;
   
+  @JsonIgnoreProperties({"apartments", "households"})
   @OneToOne
   @JoinColumn(name = "reserved_by") 
   private Households reservedBy;
   
+  @JsonIgnoreProperties({"apartments", "households"})
   @OneToOne
   @JoinColumn(name = "occupied_by") 
   private Households occupiedBy;
 
+  @Column(name = "is_rentable")
+  private Boolean isRentable;
+
+
   public Apartments() {
     super();
+    // TODO Auto-generated constructor stub
   }
 
   public Apartments(Integer apartmentId, String apartmentNumber, Boolean hasRefrig,
-      Boolean hasWashDry, Boolean hasView, Households reservedBy, Households occupiedBy) {
+      Boolean hasWashDry, Boolean hasView, Households reservedBy, Households occupiedBy,
+      Boolean isRentable) {
     super();
     this.apartmentId = apartmentId;
     this.apartmentNumber = apartmentNumber;
@@ -56,6 +61,7 @@ public class Apartments {
     this.hasView = hasView;
     this.reservedBy = reservedBy;
     this.occupiedBy = occupiedBy;
+    this.isRentable = isRentable;
   }
 
   public Integer getApartmentId() {
@@ -114,13 +120,21 @@ public class Apartments {
     this.occupiedBy = occupiedBy;
   }
 
+  public Boolean getIsRentable() {
+    return isRentable;
+  }
+
+  public void setIsRentable(Boolean isRentable) {
+    this.isRentable = isRentable;
+  }
+
   @Override
   public String toString() {
     return "Apartments [apartmentId=" + apartmentId + ", apartmentNumber=" + apartmentNumber
         + ", hasRefrig=" + hasRefrig + ", hasWashDry=" + hasWashDry + ", hasView=" + hasView
-        + ", reservedBy=" + reservedBy + ", occupiedBy=" + occupiedBy + "]";
+        + ", reservedBy=" + reservedBy + ", occupiedBy=" + occupiedBy + ", isRentable=" + isRentable
+        + "]";
   }
-
   
-
+  
 }

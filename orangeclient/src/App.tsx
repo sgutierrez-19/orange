@@ -39,10 +39,25 @@ export class App extends React.Component<any, any> {
           <Route path='/prospects'>
             <Prospects />
           </Route>
-
-          <Route path='/details'>
-            <DetailedView />
-          </Route>
+          <Route
+            path={'/details/redirect/:apartmentId'}
+            render={(match: any) => {
+              return (
+                <Redirect to={`/details/${match.match.params.apartmentId}`} />
+              );
+            }}
+          />
+          <Route
+            path='/details/:apartmentId'
+            render={(match: any) => {
+              return (
+                <DetailedView
+                  apt={match.match.params.apartmentId}
+                  path={`/details/${match.match.params.apartmentId}`}
+                />
+              );
+            }}
+          />
           {/* <Route exact path='/*'>
           <Redirect to='/' />
         </Route> */}
