@@ -83,7 +83,12 @@ public class ApartmentController {
       hh.setIsCurrent(false);
       hh.setOnNotice(false);
       hh.setIsPast(false);
-      Date expMoveIn = new Date(reqObj.getDate());
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      java.util.Date date = sdf.parse(reqObj.getDate());
+      long millis = date.getTime();
+      Date expMoveIn = new Date(millis);
+      
       hh.setExpectedMoveIn(expMoveIn);
       hhService.updateHousehold(hh);
 //      return "Household Id " + hh.getId() + " has reserved apartment #" + apt.getApartmentNumber() + " with an expected move-in date of " + hh.getExpectedMoveIn();      
@@ -108,8 +113,13 @@ public class ApartmentController {
       }
       apt.setOccupiedBy(hh);
       apt.setReservedBy(null);
-      Date expMoveIn = new Date(reqObj.getDate());
-      hh.setMoveIn(expMoveIn);
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      java.util.Date date = sdf.parse(reqObj.getDate());
+      long millis = date.getTime();
+      Date moveIn = new Date(millis);
+      
+      hh.setMoveIn(moveIn);
       hh.setIsProspect(false);
       hh.setIsFuture(false);
       hh.setIsCurrent(true);
@@ -128,7 +138,7 @@ public class ApartmentController {
   // ON NOTICE
   // apt reserved by nulled
   // household. expected_move_out - set
-  // household.onnotice => true
+//  // household.onnotice => true
   @PatchMapping("/notice")
   public Apartments onNotice(@RequestBody AptReqDto reqObj) {
     try {
@@ -138,7 +148,11 @@ public class ApartmentController {
         throw new Exception("You cannot give notice to an apartment the household doesn't occupy.");
       }
       apt.setIsRentable(true);
-      Date expMoveOut = new Date(reqObj.getDate());
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      java.util.Date date = sdf.parse(reqObj.getDate());
+      long millis = date.getTime();
+      Date expMoveOut = new Date(millis);
       hh.setExpectedMoveOut(expMoveOut);
       hh.setIsProspect(false);
       hh.setIsFuture(false);
@@ -153,6 +167,8 @@ public class ApartmentController {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getLocalizedMessage());
     }
   };
+  
+  
   // MOVE OUT
   // apt occupied_by null
   // household.move out date - set
@@ -169,7 +185,11 @@ public class ApartmentController {
         throw new Exception("Can't move out apartment #" + apt.getApartmentNumber() + " as current occupant(s) isn't the requests household");
       }
       apt.setOccupiedBy(null);
-      Date moveOut = new Date(reqObj.getDate());
+      
+      SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+      java.util.Date date = sdf.parse(reqObj.getDate());
+      long millis = date.getTime();
+      Date moveOut = new Date(millis);      
       hh.setMoveOut(moveOut);
       hh.setIsProspect(false);
       hh.setIsFuture(false);

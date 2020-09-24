@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
-import { getApartment } from '../../../api/apartments';
+import { getApartmentByAptNum } from '../../../api/apartments';
+import moment from 'moment';
 
 import hasFridge from './hasFridge.jpg';
 import hasView from './hasView.jpg';
@@ -20,8 +21,7 @@ export default class DetailedView extends React.Component<any, any> {
   }
 
   async componentDidMount() {
-    let apt = await getApartment(this.props.apt);
-    console.log(apt);
+    let apt = await getApartmentByAptNum(this.props.apt);
     this.setState({
       apartment: apt,
     });
@@ -107,19 +107,31 @@ export default class DetailedView extends React.Component<any, any> {
                 <>
                   <Col className='center-div offset-2' xs={4}>
                     <p>
-                      <b>Move-in:</b> {apt.occupiedBy.moveIn}
+                      <b>Move-in:</b>{' '}
+                      {moment(apt.occupiedBy.moveIn, [
+                        'YYYY-MM-DD',
+                        'MMM-DD-YYYY',
+                      ]).format('MMM D, YYYY')}
                     </p>
                   </Col>
                   <Col className='center-div' xs={4}>
                     <p>
-                      <b>Expected Move-out:</b> {apt.occupiedBy.expectedMoveOut}
+                      <b>Expected Move-out:</b>{' '}
+                      {moment(apt.occupiedBy.expectedMoveOut, [
+                        'YYYY-MM-DD',
+                        'MMM-DD-YYYY',
+                      ]).format('MMM D, YYYY')}
                     </p>
                   </Col>
                 </>
               ) : (
                 <Col className='center-div' xs={12}>
                   <p>
-                    <b>Move-in:</b> {apt.occupiedBy.moveIn}
+                    <b>Move-in:</b>{' '}
+                    {moment(apt.occupiedBy.moveIn, [
+                      'YYYY-MM-DD',
+                      'MMM-DD-YYYY',
+                    ]).format('MMM D, YYYY')}
                   </p>
                 </Col>
               )}
@@ -134,7 +146,7 @@ export default class DetailedView extends React.Component<any, any> {
                 <ul>
                   {apt.occupiedBy.residents.map((r: any) => {
                     return (
-                      <li>
+                      <li key={r.residentId}>
                         {r.firstName} {r.lastName}
                       </li>
                     );
@@ -157,7 +169,11 @@ export default class DetailedView extends React.Component<any, any> {
             <Row>
               <Col className='center-div offset-2' xs={4}>
                 <p>
-                  <b>Expected Move-in:</b> {apt.reservedBy.expectedMoveIn}
+                  <b>Expected Move-in:</b>{' '}
+                  {moment(apt.reservedBy.expectedMoveIn, [
+                    'YYYY-MM-DD',
+                    'MMM-DD-YYYY',
+                  ]).format('MMM D, YYYY')}
                 </p>
               </Col>
             </Row>
@@ -171,7 +187,7 @@ export default class DetailedView extends React.Component<any, any> {
                 <ul>
                   {apt.reservedBy.residents.map((r: any) => {
                     return (
-                      <li>
+                      <li key={r.residentId}>
                         {r.firstName} {r.lastName}
                       </li>
                     );

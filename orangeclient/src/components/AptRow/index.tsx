@@ -1,16 +1,15 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 
 export class AptRow extends React.Component<any, any> {
-  constructor(props: any) {
-    super(props);
-  }
-
   render() {
     return (
       <tr>
         <td style={{ textAlign: 'center' }}>
-          <Link to={`/details/redirect/${this.props.apartment.apartmentId}`}>
+          <Link
+            to={`/details/redirect/${this.props.apartment.apartmentNumber}`}
+          >
             {this.props.apartment.apartmentNumber}
           </Link>
         </td>
@@ -28,7 +27,10 @@ export class AptRow extends React.Component<any, any> {
         )}
         {this.props.apartment.occupiedBy ? (
           <td style={{ textAlign: 'center' }}>
-            {this.props.apartment.occupiedBy.moveIn}
+            {moment(this.props.apartment.occupiedBy.moveIn, [
+              'YYYY-MM-DD',
+              'MMM-DD-YYYY',
+            ]).format('MMM D, YYYY')}
           </td>
         ) : (
           <td style={{ textAlign: 'center' }}>--</td>
@@ -43,7 +45,10 @@ export class AptRow extends React.Component<any, any> {
         {this.props.apartment.occupiedBy &&
         this.props.apartment.occupiedBy.onNotice ? (
           <td style={{ textAlign: 'center' }}>
-            {this.props.apartment.occupiedBy.expectedMoveOut}
+            {moment(this.props.apartment.occupiedBy.expectedMoveOut, [
+              'YYYY-MM-DD',
+              'MMM-DD-YYYY',
+            ]).format('MMM D, YYYY')}
           </td>
         ) : (
           <td style={{ textAlign: 'center' }}>--</td>
@@ -56,7 +61,10 @@ export class AptRow extends React.Component<any, any> {
         )}
         {this.props.apartment.reservedBy ? (
           <td style={{ textAlign: 'center' }}>
-            {this.props.apartment.reservedBy.expectedMoveIn}
+            {moment(this.props.apartment.reservedBy.expectedMoveIn, [
+              'YYYY-MM-DD',
+              'MMM-DD-YYYY',
+            ]).format('MMM D, YYYY')}
           </td>
         ) : (
           <td style={{ textAlign: 'center' }}>--</td>

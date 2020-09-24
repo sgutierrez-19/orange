@@ -31,12 +31,12 @@ public class Apartments {
   @Column(name = "has_view") 
   private Boolean hasView;
   
-  @JsonIgnoreProperties({"apartments", "households"})
+  @JsonIgnoreProperties({"apartments", "reservedBy", "occupying", "reserving"})
   @OneToOne
   @JoinColumn(name = "reserved_by") 
   private Households reservedBy;
   
-  @JsonIgnoreProperties({"apartments", "households"})
+  @JsonIgnoreProperties({"apartments", "occupied_by", "reserving", "occupying"})
   @OneToOne
   @JoinColumn(name = "occupied_by") 
   private Households occupiedBy;

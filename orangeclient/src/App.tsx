@@ -14,6 +14,9 @@ import Residents from './components/pages/Residents';
 import Apartments from './components/pages/Apartments';
 import Prospects from './components/pages/Prospects';
 import DetailedView from './components/pages/DetailedView';
+import ResView from './components/pages/ResView';
+import ReservePipeline from './components/pages/ReservePipeline';
+import MovingPipeline from './components/pages/MovingPipeline';
 
 export class App extends React.Component<any, any> {
   // constructor(props: any) {
@@ -28,9 +31,12 @@ export class App extends React.Component<any, any> {
             <HomePage />
           </Route>
 
-          <Route path='/residents'>
-            <Residents />
-          </Route>
+          <Route
+            path='/residents'
+            render={(props: any) => {
+              return <Residents {...props} />;
+            }}
+          />
 
           <Route path='/apartments'>
             <Apartments />
@@ -39,6 +45,55 @@ export class App extends React.Component<any, any> {
           <Route path='/prospects'>
             <Prospects />
           </Route>
+          <Route
+            path='/reserve/:householdId'
+            render={(match: any) => {
+              return (
+                <ReservePipeline
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/reserve/${match.match.params.householdId}`}
+                />
+              );
+            }}
+          ></Route>
+          <Route
+            path='/move-in/:householdId'
+            render={(match: any) => {
+              return (
+                <MovingPipeline
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/move-in/${match.match.params.householdId}`}
+                />
+              );
+            }}
+          ></Route>
+          <Route
+            path='/give-notice/:householdId'
+            render={(match: any) => {
+              return (
+                <MovingPipeline
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/give-notice/${match.match.params.householdId}`}
+                />
+              );
+            }}
+          ></Route>
+
+          <Route
+            path='/move-out/:householdId'
+            render={(match: any) => {
+              return (
+                <MovingPipeline
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/move-out/${match.match.params.householdId}`}
+                />
+              );
+            }}
+          ></Route>
           <Route
             path={'/details/redirect/:apartmentId'}
             render={(match: any) => {
@@ -54,6 +109,26 @@ export class App extends React.Component<any, any> {
                 <DetailedView
                   apt={match.match.params.apartmentId}
                   path={`/details/${match.match.params.apartmentId}`}
+                />
+              );
+            }}
+          />
+          <Route
+            path={'/res-details/redirect/:resId'}
+            render={(match: any) => {
+              return (
+                <Redirect to={`/res-details/${match.match.params.resId}`} />
+              );
+            }}
+          />
+          <Route
+            path='/res-details/:resId'
+            render={(match: any) => {
+              return (
+                <ResView
+                  history={this.props.history}
+                  res={match.match.params.resId}
+                  path={`/details/${match.match.params.resId}`}
                 />
               );
             }}

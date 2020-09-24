@@ -14,8 +14,13 @@ public class OrangeserverApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(OrangeserverApplication.class, args);
 		try {
-	        Date expMoveIn = new SimpleDateFormat("MM-DD-YYYY").parse("10-01-2020");
-	        System.out.println(expMoveIn);
+		  String myDate ="2020/10/29";
+		  SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+		  Date date = sdf.parse(myDate);
+		  long millis = date.getTime();
+	 
+	      java.sql.Date expMoveIn = new java.sql.Date(millis);
+		  System.out.println(expMoveIn);
         } catch (Exception e) {
           System.out.println(e);
         }

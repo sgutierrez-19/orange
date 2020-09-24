@@ -42,7 +42,7 @@ public class Residents {
   private String currZip;
   
   @ManyToOne
-  @JsonIgnore
+  @JsonIgnoreProperties({"residents"})
   @JoinColumn(name = "household_id")
   private Households householdId;
 

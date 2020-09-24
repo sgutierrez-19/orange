@@ -6,11 +6,6 @@ import {
   Collapse,
   Nav,
   NavItem,
-  UncontrolledDropdown,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-  NavLink,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 

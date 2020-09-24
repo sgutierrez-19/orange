@@ -28,6 +28,28 @@ public class HouseholdService {
     return hhList;
   }
   
+  public List<Households> getCurrentHouseholds() throws Exception {
+    List<Households> hhList = hhRepo.getCurrent();
+    return hhList;
+  }
+  
+  public List<Households> getFutureHouseholds() throws Exception {
+    List<Households> hhList = hhRepo.getFuture();
+    return hhList;
+  }
+  
+  public List<Households> getProspectHouseholds() throws Exception {
+    List<Households> hhList = hhRepo.getProspect();
+    return hhList;
+  }
+  
+  public Households create(Households hh) throws Exception {
+    hh.setHouseholdId(hhRepo.findAll().get(hhRepo.findAll().size()-1).getHouseholdId() + 1);
+    return hhRepo.save(hh);
+  }
+  
+  
+  
   public Households updateHousehold(Households h) throws Exception {
     return hhRepo.save(h);
   }

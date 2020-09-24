@@ -51,22 +51,32 @@ INSERT INTO something.households (expected_move_in, expected_move_out, move_in, 
 VALUES (TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, false, false, true, false, false), 
 	   (TO_DATE('06/01/2019', 'MM/DD/YYYY'), TO_DATE('9/22/2020', 'MM/DD/YYYY'), TO_DATE('06/01/2019', 'MM/DD/YYYY'), null, false, false, true, true, false),
 	   (TO_DATE('10/01/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
-	   (TO_DATE('09/28/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false);
-
+	   (TO_DATE('09/28/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
+	   (TO_DATE('11/20/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false),
+	   (TO_DATE('9/29/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false),
+	   (TO_DATE('12/01/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false);
+	
 INSERT INTO something.apartments (apartment_number, has_refrig, has_wash_dry, has_view, reserved_by, occupied_by, is_rentable)
 VALUES ('A101', true, true, false, 3, 2, false),
        ('A102', false, false, false, null, null, true),
        ('A201', true, true, true, null, 1, false),
        ('A202', true, false, true, 4, null, false);
 
-INSERT INTO something.residents (first_name, last_name, household_id)
-VALUES ('Robert', 'Robertson', 1), 
-	   ('Janice', 'Peters', 2), 
-	   ('Suzy', 'Robertson', 1), 
-	   ('Luanne', 'Michaels', 2), 
-	   ('Alice', 'Makers', 3),
-	   ('Betty', 'Botter', 4),
-	   ('Peter', 'Piper', 4);
+INSERT INTO something.residents (first_name, last_name, phone_number, curr_address, curr_city, curr_state, curr_zip, household_id)
+VALUES ('Robert', 'Robertson', '(541) 234-2342', '1 Shadow Ln.', 'Anaheim', 'CA', '92101', 1), 
+	   ('Janice', 'Peters', '(714) 401-2395', '1 Shadow Ln.', 'Anaheim', 'CA', '92101', 2), 
+	   ('Suzy', 'Robertson', '(503) 432-0090', '1 Shadow Ln', 'Anaheim', 'CA', '92101', 1), 
+	   ('Luanne', 'Michaels', '(714) 632-2342', '1 Shadow Ln', 'Anaheim', 'CA', '92101', 2), 
+	   ('Alice', 'Makers', '(949) 712-2355', '15 Baker St.', 'San Francisco', 'CA', '95421', 3),
+	   ('Betty', 'Botter', '(858) 384-2313', '1000 First St.', 'Long Beach', 'CA', '92101', 4),
+	   ('Peter', 'Piper', '(858) 778-2111', '1000 First St.', 'Long Beach', 'CA', '92101', 4),
+	   ('Cindy', 'Adams', '(201) 789-9989', '642 Georgia St.', 'Peach', 'AL', '13593', 5),
+	   ('Lucy', 'Adams', '(201) 262-6827', '642 Georgia St.', 'Peach', 'AL', '13593', 5),
+	   ('Mark', 'Gomez', '(623) 234-6788', '412 Marker Blvd.', 'Laguna Beach', 'CA', '92555', 6),
+	   ('Lindsay', 'Matthews', '(554) 623-7784', '9920 Forest Ln.', 'Jacksonville', 'OR', '97501', 7),
+	   ('Summer', 'Breeze', '(541) 236-1112', '9920 Forest Ln.', 'Jacksonville', 'OR', '97501', 7),
+	   ('Tina', 'Phae', '(630) 269-9121', '9920 Forest Ln.', 'Jacksonville', 'OR', '97501', 7),
+	   ('Nathan', 'Smith', '(912) 212-2209', '9920 Forest Ln.', 'Jacksonville', 'OR', '97501', 7); 
 
 	   
 INSERT INTO something.notes (household_id, date_created, note)
@@ -75,25 +85,4 @@ VALUES (1, TO_DATE('02/25/2019', 'MM/DD/YYYY'), 'Came in to look at apartment, e
 	   (2, TO_DATE('05/20/2019', 'MM/DD/YYYY'), 'Just moved to area and needed an apartment ASAP, took A101'),
 	   (2, TO_DATE('07/28/2019', 'MM/DD/YYYY'), 'Complained their upstairs neighbors were too noisy and gave notice to move out'),
 	   (3, TO_DATE('08/31/2020', 'MM/DD/YYYY'), 'Said they just closed on their homes mortgage and were looking for a 6 month lease');
-
-ALTER TABLE something.households
-ADD COLUMN reserved INT NULL REFERENCES something.apartments(apartment_id);
-ALTER TABLE something.households
-ADD COLUMN occupying INT NULL REFERENCES something.apartments(apartment_id);
-
-UPDATE something.households
-SET	occupying = 3
-WHERE something.households.household_id = 1;
-
-UPDATE something.households
-SET	occupying = 1
-WHERE something.households.household_id = 2;
-
-UPDATE something.households
-SET reserved = 1
-WHERE something.households.household_id = 3;
-
-UPDATE something.households
-SET reserved = 4
-WHERE something.households.household_id = 4;
 

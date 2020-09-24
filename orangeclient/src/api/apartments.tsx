@@ -35,3 +35,59 @@ export async function getAvailApartments() {
     console.log(error);
   }
 }
+
+export async function reserveApt(
+  aptNumber: String,
+  householdId: number,
+  date: String
+) {
+  try {
+    let reqObj = { aptNumber, householdId, date };
+    let response = await server.patch('/reserve', reqObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function moveIn(
+  aptNumber: String,
+  householdId: number,
+  date: String
+) {
+  try {
+    let reqObj = { aptNumber, householdId, date };
+    let response = await server.patch('/move-in', reqObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function giveNotice(
+  aptNumber: String,
+  householdId: number,
+  date: String
+) {
+  try {
+    let reqObj = { aptNumber, householdId, date };
+    let response = await server.patch('/notice', reqObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function moveOut(
+  aptNumber: String,
+  householdId: number,
+  date: String
+) {
+  try {
+    let reqObj = { aptNumber, householdId, date };
+    let response = await server.patch('/move-out', reqObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

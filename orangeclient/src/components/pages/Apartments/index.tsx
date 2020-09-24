@@ -7,8 +7,8 @@ import {
   InputGroup,
   Input,
   InputGroupAddon,
-  InputGroupText,
   Button,
+  Alert,
 } from 'reactstrap';
 import {
   getAllApartments,
@@ -24,48 +24,55 @@ export class Apartments extends React.Component<any, any> {
     this.state = {
       apartments: null,
       apartment: null,
-      search: null,
+      search: '',
       showAll: true,
+      alertVis: false,
+      alertNum: '',
     };
   }
 
   async componentDidMount() {
     let all = await getAllApartments();
-    console.log(all);
     this.setState({
       apartments: all,
     });
   }
+
+  toggle = (e: any) => {
+    this.setState({
+      alertVis: false,
+    });
+  };
 
   setSearch = (e: any) => {
     e.preventDefault();
     this.setState({
       search: e.target.value,
     });
-    console.log(this.state.search);
   };
 
   findApt = async (e: any) => {
     e.preventDefault();
-    console.log('harro? lol');
     let apt = await getApartmentByAptNum(this.state.search);
-    console.log('APT: ', apt);
-    if (this.state.search == null || this.state.search == '') {
+    if (this.state.search === null || this.state.search === '') {
       this.setState({
         showAll: true,
         search: '',
+        alertVis: false,
       });
     } else if (!apt) {
-      alert(`Could not find apartment #${this.state.search}`);
       this.setState({
         showAll: true,
+        alertNum: this.state.search,
         search: '',
+        alertVis: true,
       });
     } else {
       this.setState({
         apartment: apt,
         showAll: false,
         search: '',
+        alertVis: false,
       });
     }
   };
@@ -96,6 +103,17 @@ export class Apartments extends React.Component<any, any> {
           </Col>
         </Row>
         <Row>
+          <Col className='center-div offset-3' xs={6}>
+            <Alert
+              color='danger'
+              toggle={this.toggle}
+              isOpen={this.state.alertVis}
+            >
+              Could not find apartment #{this.state.alertNum}
+            </Alert>
+          </Col>
+        </Row>
+        <Row>
           <Col className='center-div' xs={12}>
             <Table hover bordered striped>
               <thead>
@@ -115,7 +133,7 @@ export class Apartments extends React.Component<any, any> {
                   [
                     this.state.apartments &&
                       this.state.apartments.map((a: any) => {
-                        return <AptRow apartment={a} />;
+                        return <AptRow key={a.apartmentNumber} apartment={a} />;
                       }),
                   ]
                 ) : (

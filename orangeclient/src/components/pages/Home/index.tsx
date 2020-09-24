@@ -1,4 +1,3 @@
-// import Button from 'react-bootstrap/Button';
 import React from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { getAllApartments, getAvailApartments } from '../../../api/apartments';
@@ -20,7 +19,6 @@ export class HomePage extends React.Component<any, any> {
     let all = await getAllApartments();
     let avail = await getAvailApartments();
     let occCount: number = 0;
-    console.log('all: ', all);
     for (let i = 0; i < all.length; i++) {
       if (all[i].occupiedBy) {
         occCount++;
@@ -48,7 +46,7 @@ export class HomePage extends React.Component<any, any> {
               <Col className='available-apts-div ' xs={12}>
                 {this.state.avail &&
                   this.state.avail.map((a: any) => {
-                    return <AptCard key={a.id} apt={a} />;
+                    return <AptCard key={a.apartmentId} apt={a} />;
                   })}
               </Col>
             </Row>

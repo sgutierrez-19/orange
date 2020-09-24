@@ -50,15 +50,13 @@ public class Households {
   @Column(name = "is_past")
   private Boolean isPast;
   
-  @JsonIgnoreProperties({"households"})
-  @OneToOne
-  @JoinColumn(name = "reserved") 
-  private Apartments reserved;
-  
-  @JsonIgnoreProperties({"households", "apartments"})
-  @OneToOne
-  @JoinColumn(name = "occupying") 
+  @JsonIgnoreProperties({"households", "occupiedBy", "reservedBy", "occupying", "reserving"})
+  @OneToOne(mappedBy = "occupiedBy")
   private Apartments occupying;
+  
+  @JsonIgnoreProperties({"households", "occupiedBy", "reservedBy", "occupying", "reserving"})
+  @OneToOne(mappedBy = "reservedBy")
+  private Apartments reserving;
   
 
   @JsonIgnoreProperties({"households","apartments"})
@@ -69,12 +67,11 @@ public class Households {
   public Households() {
     super();
     // TODO Auto-generated constructor stub
-  }
-
-
+  }  
+  
   public Households(Integer householdId, Date expectedMoveIn, Date expectedMoveOut, Date moveIn,
       Date moveOut, Boolean isProspect, Boolean isFuture, Boolean isCurrent, Boolean onNotice,
-      Boolean isPast, Apartments reserved, Apartments occupying, List<Residents> residents) {
+      Boolean isPast) {
     super();
     this.householdId = householdId;
     this.expectedMoveIn = expectedMoveIn;
@@ -86,8 +83,25 @@ public class Households {
     this.isCurrent = isCurrent;
     this.onNotice = onNotice;
     this.isPast = isPast;
-    this.reserved = reserved;
+  }
+
+
+  public Households(Integer householdId, Date expectedMoveIn, Date expectedMoveOut, Date moveIn,
+      Date moveOut, Boolean isProspect, Boolean isFuture, Boolean isCurrent, Boolean onNotice,
+      Boolean isPast, Apartments occupying, Apartments reserving, List<Residents> residents) {
+    super();
+    this.householdId = householdId;
+    this.expectedMoveIn = expectedMoveIn;
+    this.expectedMoveOut = expectedMoveOut;
+    this.moveIn = moveIn;
+    this.moveOut = moveOut;
+    this.isProspect = isProspect;
+    this.isFuture = isFuture;
+    this.isCurrent = isCurrent;
+    this.onNotice = onNotice;
+    this.isPast = isPast;
     this.occupying = occupying;
+    this.reserving = reserving;
     this.residents = residents;
   }
 
@@ -192,16 +206,6 @@ public class Households {
   }
 
 
-  public Apartments getReserved() {
-    return reserved;
-  }
-
-
-  public void setReserved(Apartments reserved) {
-    this.reserved = reserved;
-  }
-
-
   public Apartments getOccupying() {
     return occupying;
   }
@@ -209,6 +213,16 @@ public class Households {
 
   public void setOccupying(Apartments occupying) {
     this.occupying = occupying;
+  }
+
+
+  public Apartments getReserving() {
+    return reserving;
+  }
+
+
+  public void setReserving(Apartments reserving) {
+    this.reserving = reserving;
   }
 
 
@@ -227,8 +241,8 @@ public class Households {
     return "Households [householdId=" + householdId + ", expectedMoveIn=" + expectedMoveIn
         + ", expectedMoveOut=" + expectedMoveOut + ", moveIn=" + moveIn + ", moveOut=" + moveOut
         + ", isProspect=" + isProspect + ", isFuture=" + isFuture + ", isCurrent=" + isCurrent
-        + ", onNotice=" + onNotice + ", isPast=" + isPast + ", reserved=" + reserved
-        + ", occupying=" + occupying + ", residents=" + residents + "]";
+        + ", onNotice=" + onNotice + ", isPast=" + isPast + ", occupying=" + occupying
+        + ", reserving=" + reserving + ", residents=" + residents + "]";
   }
 
   

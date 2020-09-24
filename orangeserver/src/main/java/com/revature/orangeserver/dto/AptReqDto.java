@@ -1,6 +1,5 @@
 package com.revature.orangeserver.dto;
 
-import java.util.Date;
 import lombok.Data;
 
 @Data
@@ -8,13 +7,13 @@ public class AptReqDto {
 
   private String aptNumber;
   private Integer householdId;
-  private Long date;
+  private String date;
   
   public AptReqDto() {
     super();
   }
 
-  public AptReqDto(String aptNumber, Integer householdId, Long date) {
+  public AptReqDto(String aptNumber, Integer householdId, String date) {
     super();
     this.aptNumber = aptNumber;
     this.householdId = householdId;
@@ -37,11 +36,11 @@ public class AptReqDto {
     this.householdId = householdId;
   }
 
-  public Long getDate() {
+  public String getDate() {
     return date;
   }
 
-  public void setDate(Long date) {
+  public void setDate(String date) {
     this.date = date;
   }
 
@@ -50,5 +49,7 @@ public class AptReqDto {
     return "AptReqDto [aptNumber=" + aptNumber + ", householdId=" + householdId + ", date=" + date
         + "]";
   }
+
+  
   
 }
