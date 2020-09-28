@@ -44,3 +44,31 @@ export async function getprospectiveRes() {
     console.log(error);
   }
 }
+
+export async function newResident(
+  householdId: number,
+  firstName: String,
+  lastName: String,
+  phoneNumber: String,
+  currAddress: String,
+  currCity: String,
+  currState: String,
+  currZip: String
+) {
+  let resObj = {
+    householdId,
+    firstName,
+    lastName,
+    phoneNumber,
+    currAddress,
+    currCity,
+    currState,
+    currZip,
+  };
+  try {
+    let response = await server.post(`/new-resident`, resObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

@@ -35,3 +35,13 @@ export async function getHousehold(id: number) {
     console.log(error);
   }
 }
+
+export async function newHousehold(date: String) {
+  let dateObj = { date };
+  try {
+    let response = await server.post(`/new-household`, dateObj);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}

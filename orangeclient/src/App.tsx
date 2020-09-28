@@ -17,6 +17,7 @@ import DetailedView from './components/pages/DetailedView';
 import ResView from './components/pages/ResView';
 import ReservePipeline from './components/pages/ReservePipeline';
 import MovingPipeline from './components/pages/MovingPipeline';
+import { NewProspect } from './components/pages/NewProspect';
 
 export class App extends React.Component<any, any> {
   // constructor(props: any) {
@@ -42,9 +43,20 @@ export class App extends React.Component<any, any> {
             <Apartments />
           </Route>
 
-          <Route path='/prospects'>
-            <Prospects />
-          </Route>
+          <Route
+            path='/prospects'
+            render={(props: any) => {
+              return <Prospects {...props} />;
+            }}
+          />
+
+          <Route
+            path='/new-prospect'
+            render={(props: any) => {
+              return <NewProspect {...props} />;
+            }}
+          />
+
           <Route
             path='/reserve/:householdId'
             render={(match: any) => {
