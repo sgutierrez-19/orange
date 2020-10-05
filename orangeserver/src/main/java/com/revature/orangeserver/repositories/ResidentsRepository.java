@@ -19,4 +19,7 @@ public interface ResidentsRepository extends JpaRepository<Residents, Integer> {
   
   @Query("FROM Residents r INNER JOIN Households h ON r.householdId = h.householdId WHERE h.isProspect = true")
   public List<Residents> getProspective();
+  
+  @Query("FROM Residents r where lower(r.fullName) LIKE %:searchName%")
+  public List<Residents> findNameLike(String searchName);
 }

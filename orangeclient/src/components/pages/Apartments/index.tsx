@@ -13,6 +13,7 @@ import {
 import {
   getAllApartments,
   getApartmentByAptNum,
+  getApartmentLike,
 } from '../../../api/apartments';
 import { AptRow } from '../../AptRow';
 
@@ -23,7 +24,7 @@ export class Apartments extends React.Component<any, any> {
     super(props);
     this.state = {
       apartments: null,
-      apartment: null,
+      searchApartments: null,
       search: '',
       showAll: true,
       alertVis: false,
@@ -53,14 +54,15 @@ export class Apartments extends React.Component<any, any> {
 
   findApt = async (e: any) => {
     e.preventDefault();
-    let apt = await getApartmentByAptNum(this.state.search);
+    // let apt = await getApartmentByAptNum(this.state.search);
+    let apt = await getApartmentLike(this.state.search);
     if (this.state.search === null || this.state.search === '') {
       this.setState({
         showAll: true,
         search: '',
         alertVis: false,
       });
-    } else if (!apt) {
+    } else if (apt.length < 1) {
       this.setState({
         showAll: true,
         alertNum: this.state.search,
@@ -69,7 +71,7 @@ export class Apartments extends React.Component<any, any> {
       });
     } else {
       this.setState({
-        apartment: apt,
+        searchApartments: apt,
         showAll: false,
         search: '',
         alertVis: false,
@@ -129,18 +131,20 @@ export class Apartments extends React.Component<any, any> {
                 </tr>
               </thead>
               <tbody>
-                {this.state.showAll ? (
-                  [
-                    this.state.apartments &&
-                      this.state.apartments.map((a: any) => {
-                        return <AptRow key={a.apartmentNumber} apartment={a} />;
-                      }),
-                  ]
-                ) : (
-                  <>
-                    <AptRow apartment={this.state.apartment} />
-                  </>
-                )}
+                {this.state.showAll
+                  ? [
+                      this.state.apartments &&
+                        this.state.apartments.map((a: any) => {
+                          return (
+                            <AptRow key={a.apartmentNumber} apartment={a} />
+                          );
+                        }),
+                    ]
+                  : this.state.searchApartments.map((a: any) => {
+                      return (
+                        <AptRow Row key={a.apartmentNumber} apartment={a} />
+                      );
+                    })}
               </tbody>
             </Table>
           </Col>

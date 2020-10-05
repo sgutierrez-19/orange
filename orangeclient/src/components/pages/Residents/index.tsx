@@ -162,6 +162,7 @@ export class Residents extends React.Component<any, any> {
         return (
           <tr>
             <th style={{ textAlign: 'center' }}>Name</th>
+            <th style={{ textAlign: 'center' }}>Apartment #</th>
             <th style={{ textAlign: 'center' }}>Move out Date</th>
           </tr>
         );

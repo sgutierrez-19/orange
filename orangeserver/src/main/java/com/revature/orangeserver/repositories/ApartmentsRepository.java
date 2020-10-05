@@ -13,6 +13,9 @@ public interface ApartmentsRepository extends JpaRepository<Apartments, Integer>
   @Query("SELECT a FROM Apartments a WHERE a.apartmentNumber = :aptNum")
   public Optional<Apartments> getByAptNum(String aptNum);
   
+  @Query("FROM Apartments a WHERE lower(a.apartmentNumber) LIKE %:aptNum%")
+  public List<Apartments> getByLikeAptNum(String aptNum);
+  
 //  @Query("SELECT a FROM Apartments a WHERE a.occupiedBy.onNotice = true")
   @Query("FROM Apartments a WHERE a.isRentable = true")
   public List<Apartments> getUnreserved();

@@ -5,6 +5,7 @@ import moment from 'moment';
 export class ResRow extends React.Component<any, any> {
   render() {
     let r = this.props.resident;
+    console.log('PAST', this.props.resident);
     return (
       <tr>
         <td style={{ textAlign: 'center' }}>
@@ -22,13 +23,9 @@ export class ResRow extends React.Component<any, any> {
             {r.householdId.reserving.apartmentNumber}
           </td>
         ) : (
-          <td style={{ textAlign: 'center' }}>
-            {moment(r.householdId.expectedMoveOut, [
-              'YYYY-MM-DD',
-              'MMM-DD-YYYY',
-            ]).format('MMM D, YYYY')}
-          </td>
+          <td style={{ textAlign: 'center' }}>{r.householdId.prevApt}</td>
         )}
+
         {r.householdId.isCurrent ? (
           <td style={{ textAlign: 'center' }}>
             {moment(r.householdId.moveIn, ['YYYY-MM-DD', 'MMM-DD-YYYY']).format(
@@ -43,7 +40,12 @@ export class ResRow extends React.Component<any, any> {
             ]).format('MMM D, YYYY')}
           </td>
         ) : (
-          <></>
+          <td style={{ textAlign: 'center' }}>
+            {moment(r.householdId.moveOut, [
+              'YYYY-MM-DD',
+              'MMM-DD-YYYY',
+            ]).format('MMM D, YYYY')}
+          </td>
         )}
 
         {r.householdId.onNotice && r.householdId.expectedMoveOut ? (

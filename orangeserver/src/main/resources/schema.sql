@@ -12,7 +12,8 @@ CREATE TABLE something.households(
 	is_future BOOLEAN DEFAULT 0,
 	is_current BOOLEAN DEFAULT 0,
 	on_notice BOOLEAN DEFAULT 0,
-	is_past BOOLEAN DEFAULT 0
+	is_past BOOLEAN DEFAULT 0,
+	prev_apt VARCHAR(15) NULL
 );
 
 CREATE TABLE something.apartments(

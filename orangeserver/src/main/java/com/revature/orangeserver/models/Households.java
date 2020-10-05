@@ -50,6 +50,9 @@ public class Households {
   @Column(name = "is_past")
   private Boolean isPast;
   
+  @Column(name = "prev_apt")
+  private String prevApt;
+  
   @JsonIgnoreProperties({"households", "occupiedBy", "reservedBy", "occupying", "reserving"})
   @OneToOne(mappedBy = "occupiedBy")
   private Apartments occupying;
@@ -67,7 +70,7 @@ public class Households {
   public Households() {
     super();
     // TODO Auto-generated constructor stub
-  }  
+  }
   
   public Households(Integer householdId, Date expectedMoveIn, Date expectedMoveOut, Date moveIn,
       Date moveOut, Boolean isProspect, Boolean isFuture, Boolean isCurrent, Boolean onNotice,
@@ -88,7 +91,8 @@ public class Households {
 
   public Households(Integer householdId, Date expectedMoveIn, Date expectedMoveOut, Date moveIn,
       Date moveOut, Boolean isProspect, Boolean isFuture, Boolean isCurrent, Boolean onNotice,
-      Boolean isPast, Apartments occupying, Apartments reserving, List<Residents> residents) {
+      Boolean isPast, String prevApt, Apartments occupying, Apartments reserving,
+      List<Residents> residents) {
     super();
     this.householdId = householdId;
     this.expectedMoveIn = expectedMoveIn;
@@ -100,6 +104,7 @@ public class Households {
     this.isCurrent = isCurrent;
     this.onNotice = onNotice;
     this.isPast = isPast;
+    this.prevApt = prevApt;
     this.occupying = occupying;
     this.reserving = reserving;
     this.residents = residents;
@@ -206,6 +211,16 @@ public class Households {
   }
 
 
+  public String getPrevApt() {
+    return prevApt;
+  }
+
+
+  public void setPrevApt(String prevApt) {
+    this.prevApt = prevApt;
+  }
+
+
   public Apartments getOccupying() {
     return occupying;
   }
@@ -241,9 +256,10 @@ public class Households {
     return "Households [householdId=" + householdId + ", expectedMoveIn=" + expectedMoveIn
         + ", expectedMoveOut=" + expectedMoveOut + ", moveIn=" + moveIn + ", moveOut=" + moveOut
         + ", isProspect=" + isProspect + ", isFuture=" + isFuture + ", isCurrent=" + isCurrent
-        + ", onNotice=" + onNotice + ", isPast=" + isPast + ", occupying=" + occupying
-        + ", reserving=" + reserving + ", residents=" + residents + "]";
+        + ", onNotice=" + onNotice + ", isPast=" + isPast + ", prevApt=" + prevApt + ", occupying="
+        + occupying + ", reserving=" + reserving + ", residents=" + residents + "]";
   }
+
 
   
 }

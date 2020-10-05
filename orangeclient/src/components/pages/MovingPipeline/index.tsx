@@ -78,6 +78,11 @@ export default class MovingPipeline extends React.Component<any, any> {
         alertVis: true,
         alertMessage: 'You can not move a household in with a future date.',
       });
+    } else if (!this.state.selDate) {
+      this.setState({
+        alertVis: true,
+        alertMessage: 'You must select a move in date.',
+      });
     } else if (this.state.apt.occupiedBy) {
       this.setState({
         alertVis: true,
@@ -107,6 +112,11 @@ export default class MovingPipeline extends React.Component<any, any> {
         alertVis: true,
         alertMessage:
           'You cannot give notice for an apartment over 60 days in advance.',
+      });
+    } else if (!this.state.selDate) {
+      this.setState({
+        alertVis: true,
+        alertMessage: 'You must select an expected move out date.',
       });
     } else if (this.state.selDate < moment().add(1, 'M').format('YYYY-MM-DD')) {
       this.setState({
@@ -140,6 +150,11 @@ export default class MovingPipeline extends React.Component<any, any> {
       this.setState({
         alertVis: true,
         alertMessage: 'You cannot move someone out with a future date.',
+      });
+    } else if (!this.state.selDate) {
+      this.setState({
+        alertVis: true,
+        alertMessage: 'You must select a move out date.',
       });
     } else if (
       this.state.selDate <

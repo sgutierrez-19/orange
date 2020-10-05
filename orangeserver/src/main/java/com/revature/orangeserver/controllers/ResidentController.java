@@ -33,6 +33,15 @@ public class ResidentController {
     }
   }
   
+  @GetMapping("/resident-name/{name}")
+  public List<Residents> getResName(@PathVariable String name) {
+    try {
+      return rService.getResByName(name.toLowerCase());
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+  }
+  
   @GetMapping("/all-residents")
   public List<Residents> getAll() {
     try {

@@ -29,6 +29,7 @@ export class Prospects extends React.Component<any, any> {
       });
     } else {
       let prospective = await getprospectiveRes();
+      console.log(prospective);
       this.setState({
         residentList: prospective.sort(this.compareLastName),
         redirectAlert: true,

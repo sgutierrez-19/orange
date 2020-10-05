@@ -55,6 +55,15 @@ public class ApartmentController {
     }
   }
   
+  @GetMapping("/apartment-like-num/{aptNum}")
+  public List<Apartments> getlikeApt(@PathVariable String aptNum) {
+    try {
+      return aptService.likeAptNumber(aptNum.toLowerCase());
+    } catch (Exception e) {
+      throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+  }
+  
   @GetMapping("/get-available")
   public List<Apartments> getAllAvailable() {
     try {
@@ -180,7 +189,7 @@ public class ApartmentController {
       Apartments apt = aptService.getByAptNumber(reqObj.getAptNumber());
       Households hh = hhService.getById(reqObj.getHouseholdId());
       if (hh.getOnNotice() == false) {
-        throw new Exception("An household must first be put on notice in order to move out.");
+        throw new Exception("A household must first be put on notice in order to move out.");
       } else if (apt.getOccupiedBy() != hh) {
         throw new Exception("Can't move out apartment #" + apt.getApartmentNumber() + " as current occupant(s) isn't the requests household");
       }
@@ -196,6 +205,7 @@ public class ApartmentController {
       hh.setIsCurrent(false);
       hh.setOnNotice(false);
       hh.setIsPast(true);
+      hh.setPrevApt(apt.getApartmentNumber());
       aptService.updateApartment(apt);
       hhService.updateHousehold(hh);
       return hh;

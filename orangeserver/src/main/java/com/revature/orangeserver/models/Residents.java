@@ -8,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import org.hibernate.annotations.Formula;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -46,13 +47,16 @@ public class Residents {
   @JoinColumn(name = "household_id")
   private Households householdId;
 
+  @Formula(value = " concat(first_name, ' ', last_name) ")
+  private String fullName;
+
   public Residents() {
     super();
+    // TODO Auto-generated constructor stub
   }
-
+  
   public Residents(Integer residentId, String firstName, String lastName, String phoneNumber,
-      String currAddress, String currCity, String currState, String currZip,
-      Households householdId) {
+      String currAddress, String currCity, String currState, String currZip, Households householdId) {
     super();
     this.residentId = residentId;
     this.firstName = firstName;
@@ -63,6 +67,22 @@ public class Residents {
     this.currState = currState;
     this.currZip = currZip;
     this.householdId = householdId;
+  }
+
+  public Residents(Integer residentId, String firstName, String lastName, String phoneNumber,
+      String currAddress, String currCity, String currState, String currZip, Households householdId,
+      String fullName) {
+    super();
+    this.residentId = residentId;
+    this.firstName = firstName;
+    this.lastName = lastName;
+    this.phoneNumber = phoneNumber;
+    this.currAddress = currAddress;
+    this.currCity = currCity;
+    this.currState = currState;
+    this.currZip = currZip;
+    this.householdId = householdId;
+    this.fullName = fullName;
   }
 
   public Integer getResidentId() {
@@ -137,13 +157,21 @@ public class Residents {
     this.householdId = householdId;
   }
 
+  public String getFullName() {
+    return fullName;
+  }
+
+  public void setFullName(String fullName) {
+    this.fullName = fullName;
+  }
+
   @Override
   public String toString() {
     return "Residents [residentId=" + residentId + ", firstName=" + firstName + ", lastName="
         + lastName + ", phoneNumber=" + phoneNumber + ", currAddress=" + currAddress + ", currCity="
         + currCity + ", currState=" + currState + ", currZip=" + currZip + ", householdId="
-        + householdId + "]";
+        + householdId + ", fullName=" + fullName + "]";
   }
-
+  
   
 }

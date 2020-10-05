@@ -9,6 +9,15 @@ export async function getRes(resId: number) {
   }
 }
 
+export async function getResByName(name: String) {
+  try {
+    let response = await server.get(`/resident-name/${name}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getCurrentRes() {
   try {
     let response = await server.get(`/current-residents`);

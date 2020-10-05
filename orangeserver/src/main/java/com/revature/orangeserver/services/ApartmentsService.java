@@ -40,6 +40,11 @@ public class ApartmentsService {
     } else {
       throw new Exception("Apartment #" + aptNum + " not found.");
     }
+  };
+  
+  public List<Apartments> likeAptNumber(String aptNum) throws Exception {
+    List<Apartments> apt = apartmentRepository.getByLikeAptNum(aptNum);
+    return apt;
   }
   
   public Apartments updateApartment(Apartments apt) {

@@ -74,13 +74,13 @@ export class HomePage extends React.Component<any, any> {
             </div>
             <Row>
               <Col className='subbb' xs={12}>
-                <Link to='/something'>soemthing</Link>
+                <Link to='/notes'>New Resident Note</Link>
                 <br />
-                <Link to='/something'>soemthing</Link>
+                <Link to='/something'>TBD</Link>
                 <br />
-                <Link to='/something'>soemthing</Link>
+                <Link to='/something'>TBD</Link>
                 <br />
-                <Link to='/something'>soemthing</Link>
+                <Link to='/something'>TBD</Link>
                 <br />
               </Col>
             </Row>

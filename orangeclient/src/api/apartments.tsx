@@ -18,6 +18,15 @@ export async function getApartmentByAptNum(aptNum: String) {
   }
 }
 
+export async function getApartmentLike(aptNum: String) {
+  try {
+    let response = await server.get(`/apartment-like-num/${aptNum}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getAllApartments() {
   try {
     let response = await server.get('/apartments');

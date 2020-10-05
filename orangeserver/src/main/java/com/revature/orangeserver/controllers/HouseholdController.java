@@ -77,9 +77,7 @@ public class HouseholdController {
   public Households newHh(@RequestBody HhReqDto reqObj) {
     try {
       SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-      System.out.println(reqObj.getDate());
       java.util.Date date = sdf.parse(reqObj.getDate());
-      System.out.println(reqObj.getDate());
       long millis = date.getTime();
       Date expMoveIn = new Date(millis);
       Households newHh = new Households(0, expMoveIn, null, null, null, true, false, false, false, false);

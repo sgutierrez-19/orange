@@ -22,6 +22,11 @@ public class ResidentsService {
     }
   }
   
+  public List<Residents> getResByName(String name) throws Exception {
+    List<Residents> resList = rRepo.findNameLike(name);
+    return resList;
+  }
+  
   public List<Residents> getAllResidents() throws Exception {
     List<Residents> residents = rRepo.findAll();
     return residents;

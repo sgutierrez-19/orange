@@ -18,6 +18,8 @@ import ResView from './components/pages/ResView';
 import ReservePipeline from './components/pages/ReservePipeline';
 import MovingPipeline from './components/pages/MovingPipeline';
 import { NewProspect } from './components/pages/NewProspect';
+import FindNotes from './components/pages/FindNotes';
+import Notes from './components/pages/Notes';
 
 export class App extends React.Component<any, any> {
   // constructor(props: any) {
@@ -47,6 +49,26 @@ export class App extends React.Component<any, any> {
             path='/prospects'
             render={(props: any) => {
               return <Prospects {...props} />;
+            }}
+          />
+
+          <Route
+            path='/notes'
+            render={(props: any) => {
+              return <FindNotes {...props} />;
+            }}
+          />
+
+          <Route
+            path='/create-note/:householdId'
+            render={(match: any) => {
+              return (
+                <Notes
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/create-note/${match.match.params.householdId}`}
+                />
+              );
             }}
           />
 
