@@ -78,8 +78,6 @@ export class Residents extends React.Component<any, any> {
   };
 
   compareAptNum = (a: any, b: any) => {
-    console.log('compareAptNum - a: ', a);
-    console.log('compareAptNum - b: ', b);
     if (a.householdId.occupying && a.householdId.occupying.apartmentNumber) {
       if (
         a.householdId.occupying.apartmentNumber <

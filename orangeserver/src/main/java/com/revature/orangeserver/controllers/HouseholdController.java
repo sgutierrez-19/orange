@@ -14,12 +14,16 @@ import org.springframework.web.server.ResponseStatusException;
 import com.revature.orangeserver.dto.HhReqDto;
 import com.revature.orangeserver.models.Households;
 import com.revature.orangeserver.services.HouseholdService;
+import com.revature.orangeserver.services.LedgersService;
 
 @RestController
 public class HouseholdController {
   
   @Autowired
   HouseholdService hhService;
+  
+  @Autowired
+  LedgersService lService;
   
   //Get households
   @GetMapping("/all-households")
@@ -82,7 +86,7 @@ public class HouseholdController {
       Date expMoveIn = new Date(millis);
       Households newHh = new Households(0, expMoveIn, null, null, null, true, false, false, false, false);
       hhService.create(newHh);
-      
+      lService.addNewLedger(newHh);
       return newHh;
     } catch (Exception e) {
       throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

@@ -129,6 +129,21 @@ export default class ResView extends React.Component<any, any> {
             />
           </Col>
         </Row>
+        <Row>
+        <Col className='center-div offset-5' xs={2}>
+              <NavLink 
+                to={{
+                  pathname: `/ledger/${this.state.household.id}`,
+                  state: {
+                    resident: this.state.resident,
+                    household: this.state.household,
+                    roommates: this.state.roommates
+                  }
+                }}>
+                <Button color='success'>View Ledger</Button>
+              </NavLink>
+            </Col>
+        </Row>
         <Row className='sub-title'>
           <Col className='center-div offset-2 detailed-border' xs={8}>
             <h2>

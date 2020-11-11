@@ -62,7 +62,7 @@ public class Households {
   private Apartments reserving;
   
 
-  @JsonIgnoreProperties({"households","apartments"})
+  @JsonIgnoreProperties({"households","apartments", "householdId"})
   @OneToMany(mappedBy = "householdId")
   private List<Residents> residents;
 

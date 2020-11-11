@@ -20,6 +20,7 @@ import MovingPipeline from './components/pages/MovingPipeline';
 import { NewProspect } from './components/pages/NewProspect';
 import FindNotes from './components/pages/FindNotes';
 import Notes from './components/pages/Notes';
+import { Ledger } from './components/pages/Ledger';
 
 export class App extends React.Component<any, any> {
   // constructor(props: any) {
@@ -56,6 +57,18 @@ export class App extends React.Component<any, any> {
             path='/notes'
             render={(props: any) => {
               return <FindNotes {...props} />;
+            }}
+          />
+          <Route
+            path='/ledger/:householdId'
+            render={(match: any) => {
+              return (
+                <Ledger
+                  {...match}
+                  hh={match.match.params.householdId}
+                  path={`/ledger/${match.match.params.householdId}`}
+                />
+              );
             }}
           />
 

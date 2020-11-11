@@ -15,6 +15,7 @@ public class HouseholdService {
   HouseholdsRepository hhRepo;
   
   public Households getById(Integer id) throws Exception {
+    System.out.println("xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx");
     Optional<Households> household = hhRepo.findById(id);
     if (household.isPresent()) {
       return household.get();

@@ -46,15 +46,35 @@ CREATE TABLE something.notes(
 	note VARCHAR(500) NOT NULL
 );
 
+CREATE TABLE something.categories(
+	category_id SERIAL PRIMARY KEY,
+	name VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE something.ledgers(
+	ledger_id SERIAL PRIMARY KEY,
+	household_id INT NOT NULL UNIQUE REFERENCES something.households(household_id),
+	balance VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE something.ledger_rows(
+	row_id SERIAL PRIMARY KEY,
+	ledger_id INT NOT NULL REFERENCES something.ledgers(ledger_id),
+	category_id INT NOT NULL REFERENCES something.categories(category_id),
+	date_created DATE,
+	description VARCHAR(500) NOT NULL,
+	amount VARCHAR(20) NOT NULL
+);
+
 
 
 INSERT INTO something.households (expected_move_in, expected_move_out, move_in, move_out, is_prospect, is_future, is_current, on_notice, is_past) 
 VALUES (TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, TO_DATE('03/01/2019', 'MM/DD/YYYY'), null, false, false, true, false, false), 
-	   (TO_DATE('06/01/2019', 'MM/DD/YYYY'), TO_DATE('9/22/2020', 'MM/DD/YYYY'), TO_DATE('06/01/2019', 'MM/DD/YYYY'), null, false, false, true, true, false),
-	   (TO_DATE('10/01/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
-	   (TO_DATE('09/28/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
+	   (TO_DATE('06/01/2019', 'MM/DD/YYYY'), TO_DATE('10/14/2020', 'MM/DD/YYYY'), TO_DATE('06/01/2019', 'MM/DD/YYYY'), null, false, false, true, true, false),
+	   (TO_DATE('10/21/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
+	   (TO_DATE('10/26/2020', 'MM/DD/YYYY'), null, null, null, false, true, false, false, false),
 	   (TO_DATE('11/20/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false),
-	   (TO_DATE('9/29/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false),
+	   (TO_DATE('10/31/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false),
 	   (TO_DATE('12/01/2020', 'MM/DD/YYYY'), null, null, null, true, false, false, false, false);
 	
 INSERT INTO something.apartments (apartment_number, has_refrig, has_wash_dry, has_view, reserved_by, occupied_by, is_rentable)
@@ -86,4 +106,23 @@ VALUES (1, TO_DATE('02/25/2019', 'MM/DD/YYYY'), 'Came in to look at apartment, e
 	   (2, TO_DATE('05/20/2019', 'MM/DD/YYYY'), 'Just moved to area and needed an apartment ASAP, took A101'),
 	   (2, TO_DATE('07/28/2019', 'MM/DD/YYYY'), 'Complained their upstairs neighbors were too noisy and gave notice to move out'),
 	   (3, TO_DATE('08/31/2020', 'MM/DD/YYYY'), 'Said they just closed on their homes mortgage and were looking for a 6 month lease');
+	   
+INSERT INTO something.categories (name)
+VALUES ('RENT'), ('LATEFEE'), ('SECDEP'), ('CONCESSION'), ('CLEANING'), ('CARPET'), ('PAINT'), ('DAMAGES'), ('PETFEE'), ('PETDEP'), ('APPFEE'), ('PMT'), ('REFUND');
+
+INSERT INTO something.ledgers(household_id, balance)
+VALUES (1, '0.00'), (2, '0.00'), (3, '0.00'), (4, '0.00'), (5, '0.00'), (6, '0.00'), (7, '0.00');
+
+INSERT INTO something.ledger_rows(ledger_id, category_id, date_created, description, amount)
+VALUES (1, 3, TO_DATE('03/01/2019', 'MM/DD/YYYY'), 'Security Deposit', '500.00'),
+	   (1, 11, TO_DATE('03/01/2019', 'MM/DD/YYYY'), 'Application Fee x2', '90.00'),
+	   (1, 12, TO_DATE('03/01/2019', 'MM/DD/YYYY'), 'Move In Check', '-590.00'),
+	   (2, 3, TO_DATE('06/01/2019', 'MM/DD/YYYY'), 'Security Deposit', '500.00'),
+	   (2, 11, TO_DATE('06/01/2019', 'MM/DD/YYYY'), 'Application Fee x2', '90.00'),
+	   (2, 12, TO_DATE('06/01/2019', 'MM/DD/YYYY'), 'Move In Check', '-590.00'),
+	   (3, 3, TO_DATE('10/01/2020', 'MM/DD/YYYY'), 'Security Deposit', '500.00'),
+	   (3, 11, TO_DATE('10/01/2020', 'MM/DD/YYYY'), 'Application Fee', '45.00'),
+	   (4, 3, TO_DATE('10/03/2020', 'MM/DD/YYYY'), 'Security Deposit', '500.00'),
+	   (4, 11, TO_DATE('10/03/2020', 'MM/DD/YYYY'), 'Application Fee x2', '90.00');
+	   
 
